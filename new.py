@@ -17,6 +17,12 @@ import os
 # Use GPU 0 for the LLM
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
+import warnings
+warnings.filterwarnings("ignore", category=UserWarning)
+warnings.filterwarnings("ignore", category=FutureWarning)
+warnings.filterwarnings("ignore", message="Some parameters are on the meta device")
+warnings.filterwarnings("ignore", message="torch_dtype is deprecated")
+
 import sys
 import tempfile
 import traceback
@@ -130,7 +136,7 @@ def load_gemma():
         _model = AutoModelForCausalLM.from_pretrained(
             LLM_ID,
             device_map="auto",
-            torch_dtype=torch.bfloat16,
+            dtype=torch.bfloat16,
             trust_remote_code=True  # gemma models may require trust_remote_code
         )
         print("✔ Gemma loaded with torch.bfloat16 (BF16) on GPU.")
@@ -140,7 +146,7 @@ def load_gemma():
             _model = AutoModelForCausalLM.from_pretrained(
                 LLM_ID,
                 device_map="auto",
-                torch_dtype=torch.float16,
+                dtype=torch.float16,
                 trust_remote_code=True
             )
             print("✔ Gemma loaded with float16 on GPU.")
@@ -149,7 +155,7 @@ def load_gemma():
             _model = AutoModelForCausalLM.from_pretrained(
                 LLM_ID,
                 device_map="auto",
-                torch_dtype=torch.float32,
+                dtype=torch.float32,
                 trust_remote_code=True
             )
             print("✔ Gemma loaded with float32 on GPU.")
