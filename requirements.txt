@@ -1,0 +1,13 @@
+torch
+torchaudio
+torchvision
+transformers>=4.39.0
+sentencepiece
+accelerate
+
+faster-whisper
+sounddevice
+soundfile
+numpy
+
+kokoro
